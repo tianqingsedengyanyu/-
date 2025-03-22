@@ -1,0 +1,26 @@
+#!/bin/bash
+DATE=$(date +%F_%T)
+
+WWWROOT=/usr/local/nginx/html/$1
+
+BACKUP_DIR=/data/backup
+WORK_DIR=/tmp
+PROJECT_NAME=php-demo
+
+# 拉取代码
+cd $WORK_DIR
+if [ ! -d $PROJECT_NAME ]; then
+   git clone [url=https://github.com/lizhenliang/php-demo]https://github.com/lizhenliang/php-demo[/url]
+   cd $PROJECT_NAME
+else
+   cd $PROJECT_NAME
+   git pull
+fi
+
+# 部署
+if [ ! -d $WWWROOT ]; then
+   mkdir -p $WWWROOT
+   rsync -avz --exclude=.git $WORK_DIR/$PROJECT_NAME/* $WWWROOT
+else
+   rsync -avz --exclude=.git $WORK_DIR/$PROJECT_NAME/* $WWWROOT
+fi

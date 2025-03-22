@@ -1,0 +1,12 @@
+#!/bin/bash
+ 
+touch /tmp/$$.tmp
+ 
+pnum=`ps aux | wc -l`
+touch /tmp/$pnum.tmp
+ 
+fnum=`find /etc | wc -l`
+touch /tmp/$fnum.tmp
+ 
+cnum=`cat /var/log/messages | wc -l`
+touch /tmp/$cnum.tmp

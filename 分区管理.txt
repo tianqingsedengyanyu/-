@@ -1,0 +1,26 @@
+
+#!/bin/bash
+ 
+if [ $# -ne 2 ];then
+  echo -e "usage: <disk name> <create|new|remove|query>"
+  exit
+fi
+ 
+if [ ! -b $1 ];then
+  echo -e "disk nonentity"
+  exit
+fi
+ 
+if [[ $2 == create ]];then
+  parted -s $1 mklabel gpt
+elif [[ $2 == new ]];then
+  parted -s $1 mkpart primary 1 100%
+elif [[ $2 == remove ]];then
+  parted -s $1 rm 1
+elif [[ $2 == query ]];then
+  parted -s $1 print
+else
+  clear
+  echo -e "operation error"
+  echo "use:[create|new|remove|query]."
+fi

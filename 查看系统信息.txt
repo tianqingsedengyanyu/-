@@ -1,0 +1,17 @@
+#!/bin/bash
+echo "输入一个选项"
+select item in "CPU" "IP" "MEM" "exit"
+do
+  case $item in
+    "CPU")
+      uptime;;
+    "IP")
+      ip a s;;
+    "MEM")
+      free;;
+    "exit")
+      exit;;
+    *)
+      echo error;;
+  esac
+done
