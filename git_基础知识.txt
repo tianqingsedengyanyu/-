@@ -1,0 +1,69 @@
+命令	说明
+echo $LANG	查看当前系统语言及编码
+git --version	查看Git版本
+git --help	查看Git命令帮助信息
+Git配置类
+命令	说明
+git config --global user.name 用户名	设置全局用户名
+git config --global user.email 邮箱	设置全局用户邮箱
+git config --global init.defaultBranch master	设置版本库默认分支
+git config --list	查看已有Git配置
+cat ~/.gitconfig	查看Git配置持久化文件
+Git版本库操作类
+命令	说明
+git init myproject	初始化空版本库
+ls -a myproject/.git/	查看版本库的.git目录内容
+git status	查看Git本地仓库状态
+echo "Learning Git" >> readme.md	创建readme文件
+git add readme.md	将文件信息添加到暂存区
+git commit -m "add readme"	将暂存区文件提交到本地仓库
+git log	查看本地版本库提交记录（详细）
+git log --pretty=oneline	查看本地版本库提交记录（简略）
+git log --oneline	查看本地版本库提交记录（极简）
+git add test.txt	将test.txt添加到暂存区
+git commit -m "add test.txt"	生成新版本
+echo 456 > test.txt	修改test.txt文件
+git add .	将修改文件添加到暂存区
+git commit -m "modify test.txt"	生成新版本
+echo 789 > test.txt	修改test.txt文件
+git add ./	将修改文件添加到暂存区
+git commit -m "done test.txt"	生成新版本
+git log --pretty=oneline	查看本地提交记录（简略）
+git log --oneline	查看本地提交记录（极简）
+Git指针操作类
+命令	说明
+git log --pretty=oneline	查看Git指针
+git reset --hard 版本ID	还原到指定版本
+git log --oneline	确认HEAD指针移动
+git reflog	获取HEAD指针移动轨迹
+git reset --hard 版本ID	还原到指定版本
+git log --oneline	查看本地提交记录（极简）
+git reflog	查看HEAD指针移动轨迹
+Git分支操作类
+命令	说明
+git status	查看本地Git仓库信息
+git branch -v	查看分支信息
+git branch hotfix	创建hotfix分支
+git checkout hotfix	切换到hotfix分支
+git branch -d develop	删除develop分支
+git add ./	添加haha到暂存区
+git commit -m "add haha.txt"	生成新版本
+git merge hotfix	合并hotfix分支到master分支
+Git标签操作类
+命令	说明
+git tag	查看已有标签
+git tag v1	创建v1标签
+git tag	查看已有标签
+git tag v2	创建v2标签
+git tag	查看已有标签
+git tag -d v2	删除v2标签
+Git推送
+类别	命令	描述
+初始化仓库	git init	初始化一个空的 Git 仓库于当前目录下（初始化目录）
+关联远程仓库	git remote add origin 远程仓库地址	将本地仓库与远程仓库关联，设置远程仓库地址
+验证远程仓库	git remote -v	查看远程仓库的关联信息，确认 fetch 和 push 的地址
+添加到暂存区	git add ./	将当前目录下的所有文件添加到暂存区
+提交到本地仓库	git commit -m "Init Fontend Code"	将暂存区的内容提交到本地版本库，并添加提交信息
+创建标签	git tag v1	在本地仓库中创建一个名为 v1 的标签
+推送分支到远程	git push -u origin --all	将本地所有分支推送到远程仓库，并设置上游分支（跟踪关系）
+推送标签到远程	git push -u origin --tags	将本地所有标签推送到远程仓库

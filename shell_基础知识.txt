@@ -1,0 +1,105 @@
+基础命令
+命令/符号	用途
+echo	输出变量或文本
+read	从标准输入读取变量值
+source 或 .	执行脚本文件，不开启子进程
+chmod	修改文件权限
+usermod、chsh	更改用户的登录Shell
+unset	取消变量
+export	将局部变量声明为全局变量
+条件测试
+命令/符号	用途
+test 或 [ ]	条件测试
+-z	测试字符串是否为空
+-n	测试字符串是否非空
+==	字符串比较，相等
+!=	字符串比较，不相等
+-eq	整数比较，相等
+-ne	整数比较，不相等
+-ge	整数比较，大于等于
+-le	整数比较，小于等于
+-gt	整数比较，大于
+-lt	整数比较，小于
+-e	测试文件或目录是否存在
+-d	测试是否为目录
+-f	测试是否为普通文件
+-r	测试是否有读权限
+-w	测试是否有写权限
+-x	测试是否有执行权限
+&&	逻辑与
+循环与控制
+命令/符号	用途
+for	循环遍历一组值
+while	循环，条件为真时执行
+break	跳出循环
+continue	跳过当前循环的剩余部分
+if、elif、else	条件判断
+case	匹配执行
+字符串处理
+命令/符号	用途
+${变量:起始位置:长度}	字符串截取
+${变量/old/new}	替换字符串中的第一个匹配项
+${变量//old/new}	替换字符串中的所有匹配项
+${变量#*关键词}	从左向右删除最短匹配
+${变量##*关键词}	从左向右删除最长匹配
+${变量%关键词*}	从右向左删除最短匹配
+${变量%%关键词*}	从右向左删除最长匹配
+正则表达式
+符号	用途
+^	匹配行首
+$	匹配行尾
+[ ]	匹配集合中的任意单个字符
+[ ^ ]	匹配集合的反集
+.	匹配任意单个字符
+*	匹配前一个字符任意次数
+\{n,m\}	匹配前一个字符n到m次
+\{n\}	匹配前一个字符n次
+\{n,\}	匹配前一个字符n次及以上
+\(、\)	组合为整体
++	最少匹配一次
+?	最多匹配一次
+{n,m}	匹配前一个字符n到m次
+()	组合为整体
+\b	单词边界
+\w	匹配数字、字母、下划线
+\s	匹配空格、制表符
+\d	匹配数字
+文本处理工具
+sed 用法、选项及符号
+用法/选项/符号	说明	示例
+sed 's/old/new/'	替换文本中的字符串	sed 's/hello/hi/' 将 "hello" 替换为 "hi"
+sed '1,3d'	删除指定行	sed '1,3d' 删除第1到第3行
+sed -n '2,4p'	打印指定行	sed -n '2,4p' 打印第2到第4行
+sed '1a text'	在指定行后追加文本	sed '1a new_line' 在第1行后追加 "new_line"
+sed '1i text'	在指定行前插入文本	sed '1i new_line' 在第1行前插入 "new_line"
+sed '1c text'	替换指定行为文本	sed '1c new_line' 将第1行替换为 "new_line"
+-n	屏蔽默认输出，仅显示匹配结果	sed -n '2p' 仅显示第2行
+-i	直接修改源文件	sed -i 's/old/new/' file 直接修改文件中的内容
+-r	支持扩展正则表达式	sed -r 's/[0-9]+/num/' 使用扩展正则匹配数字
+&	在替换中表示匹配到的内容	sed 's/[0-9]+/&0/' 将数字替换为数字加0
+\1, \2	在替换中引用分组内容	sed 's/\([0-9]\+\)/\1-1/' 将数字减1
+g	全局替换，替换所有匹配项	sed 's/old/new/g' 替换所有 "old" 为 "new"
+p	打印匹配的行	sed -n '/pattern/p' 打印包含 "pattern" 的行
+d	删除匹配的行	sed '/pattern/d' 删除包含 "pattern" 的行
+a	在匹配行后追加文本	sed '/pattern/a new_line' 在匹配行后追加
+i	在匹配行前插入文本	sed '/pattern/i new_line' 在匹配行前插入
+c	将匹配行替换为文本	sed '/pattern/c new_line' 替换匹配行为新文本
+awk 用法、选项及符号
+用法/选项/符号	说明	示例
+awk '{print $1}'	打印第1列	awk '{print $1}' file 打印文件的第1列
+awk '/pattern/ {print}'	打印匹配模式的行	awk '/error/ {print}' file 打印包含 "error" 的行
+awk -F':' '{print $1}'	指定分隔符	awk -F':' '{print $1}' /etc/passwd 以 ":" 分隔打印第1列
+awk 'BEGIN {print "Start"} {print} END {print "End"}'	BEGIN 和 END 块	在输出前后添加文本
+awk '{sum += $1} END {print sum}'	计算列的总和	计算第1列的总和
+awk '{if ($1 > 10) print}'	条件判断	打印第1列大于10的行
+awk '{for (i=1; i<=NF; i++) print $i}'	循环处理列	遍历每一列并打印
+awk '{split($0, a, / /); print a[1]}'	分割字符串	将行按空格分割并打印第1部分
+awk '{printf "%-10s %5d\n", $1, $2}'	格式化输出	格式化打印第1列和第2列
+awk '{arr[$1]++} END {for (i in arr) print i, arr[i]}'	数组统计	统计第1列的出现次数
+awk 'NR==1 {print}'	按行号处理	打印第1行
+awk 'NF==3 {print}'	按列数处理	打印有3列的行
+awk '$1 ~ /pattern/ {print}'	模式匹配列	打印第1列匹配模式的行
+awk '$1 > $2 {print}'	列比较	打印第1列大于第2列的行
+awk 'BEGIN {FS=":"} {print $1}'	设置字段分隔符	在 BEGIN 块中设置分隔符
+awk '{print $NF}'	打印最后一列	打印每行的最后一列
+awk '{print $(NF-1)}'	打印倒数第二列	打印每行的倒数第二列

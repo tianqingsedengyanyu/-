@@ -1,0 +1,266 @@
+Linux命令部分
+文件操作类命令
+命令
+常用选项
+案例
+touch
+-c（避免创建新文件）、-t（指定时间）
+touch -t 202401011200 file.txt（创建一个带有指定时间戳的空文件）
+cat
+-n（显示行号）、-v（显示不可见字符）
+cat -n file.txt（显示文件内容并附带行号）
+cp
+-r（递归复制目录）、-i（交互式提示）
+cp -r dir1 dir2（将目录dir1复制到dir2）
+mv
+-i（交互式提示）、-f（强制覆盖）
+mv file.txt /home/user/（将文件移动到用户目录）
+rm
+-r（递归删除）、-f（强制删除）
+rm -rf dir1（强制删除目录dir1及其内容）
+chmod
++x（添加执行权限）、-r（移除读权限）
+chmod +x script.sh（为脚本添加执行权限）
+chown
+--reference=FILE（参考文件的用户）
+chown --reference=file1 file2（将file2的所有者更改为与file1相同）
+ln
+-s（创建软链接）
+ln -s /path/to/file link（创建文件的软链接）
+dd
+if=输入文件、of=输出文件、bs=块大小
+dd if=/dev/sda of=/dev/sdb bs=4M（将磁盘sda的内容复制到sdb）
+split
+-b（按大小分割）、-l（按行数分割）
+split -b 1000 file.txt（将文件按每1000字节分割）
+tail
+-n（显示最后n行）、-f（实时跟踪文件）
+tail -f /var/log/syslog（实时查看系统日志的最后几行）
+head
+-n（显示前n行）
+head -n 5 file.txt（显示文件的前5行）
+grep
+-i（忽略大小写）、-v（反向选择）
+grep -i "error" log.txt（查找日志中包含"error"的行，忽略大小写）
+awk
+-F（指定分隔符）
+awk -F: '{print $1}' /etc/passwd（打印/etc/passwd文件中的用户名字段）
+sed
+-i（直接修改文件）、-e（指定编辑命令）
+sed -i 's/old/new/g' file.txt（将文件中的"old"替换为"new"）
+目录操作类命令
+命令
+常用选项
+案例
+mkdir
+-p（创建父目录）
+mkdir -p dir1/subdir（创建嵌套目录）
+rmdir
+-p（删除父目录）
+rmdir -p dir1/subdir（删除子目录及其父目录）
+pwd
+无常用选项
+pwd（显示当前工作目录的绝对路径）
+ls
+-l（长格式）、-a（显示隐藏文件）
+ls -la（以长格式列出包括隐藏文件在内的所有文件）
+文本处理类命令
+命令
+常用选项
+案例
+less
+/pattern（搜索模式）
+less file.txt（分页查看文件内容）
+more
+/pattern（搜索模式）
+more file.txt（分页查看文件内容）
+vi
+vi file.txt（使用vi编辑器打开文件）
+vim
+vim file.txt（使用vim编辑器打开文件）
+系统管理类命令
+命令
+常用选项
+案例
+uname
+-a（所有信息）、-r（内核版本）
+uname -a（显示系统的所有信息）
+uptime
+无常用选项
+uptime（显示系统运行时间、用户数和负载）
+df
+-h（人类可读格式）、-T（显示文件系统类型）
+df -h（以易读格式显示磁盘使用情况）
+du
+-sh（总结，人类可读）、-a（所有文件）
+du -sh /home（显示/home目录的总大小）
+free
+-h（人类可读格式）、-m（以MB为单位）
+free -h（以易读格式显示内存使用情况）
+top
+无常用选项
+top（显示系统资源使用情况的动态视图）
+ps
+aux（所有用户和进程）、-ef（扩展格式）
+ps aux（列出所有运行中的进程）
+kill
+-9（强制终止）、-TERM（默认终止信号）
+kill -9 1234（强制终止PID为1234的进程）
+killall
+-v（详细模式）
+killall -v firefox（终止所有名为firefox的进程并显示详细信息）
+pkill
+-f（匹配完整命令行）
+pkill -f "python script.py"（终止匹配命令行中包含"python script.py"的进程）
+service
+start、stop、restart、status
+service apache2 restart（重启apache2服务）
+systemctl
+start、stop、restart、status、enable、disable
+systemctl enable sshd（设置sshd服务开机自启）
+网络管理类命令
+命令
+常用选项
+案例
+ifconfig
+-a（显示所有接口）
+ifconfig eth0（查看eth0接口的配置）
+ip
+addr（显示地址）、route（显示路由）
+ip addr show（显示所有网络接口的地址信息）
+ping
+-c（发送指定数量的包）
+ping -c 4 google.com（向google.com发送4个ICMP包）
+netstat
+-t（TCP）、-u（UDP）、-l（监听端口）、-n（不解析地址）
+netstat -tuln（显示所有TCP和UDP的监听端口）
+ss
+-t（TCP）、-u（UDP）、-l（监听端口）
+ss -tuln（显示所有TCP和UDP的监听端口）
+nslookup
+nslookup google.com（查询google.com的DNS记录）
+dig
++short（仅显示答案）、-x（反向查询）
+dig google.com（查询google.com的DNS记录）
+curl
+-I（仅获取头部信息）、-O（下载文件）、-X（指定HTTP方法）
+curl -I http://example.com（获取example.com的HTTP头部信息）
+wget
+-O（输出到文件）、-q（安静模式）
+wget -O index.html http://example.com（将example.com的页面保存为index.html）
+进程管理类命令
+命令
+常用选项
+案例
+bg
+bg 1234（将作业ID为1234的作业放到后台运行）
+fg
+fg 1234（将作业ID为1234的作业放到前台运行）
+jobs
+-l（列出进程ID）
+jobs -l（列出当前shell的所有作业及其PID）
+用户管理类命令
+命令
+常用选项
+案例
+useradd
+-u（指定UID）、-g（指定主组）
+useradd -u 1001 -g users newuser（创建新用户newuser，UID为1001，主组为users）
+usermod
+-aG（追加到组）、-d（更改主目录）
+usermod -aG sudo newuser（将新用户添加到sudo组）
+userdel
+-r（删除主目录）
+userdel -r olduser（删除用户olduser及其主目录）
+groupadd
+-g（指定GID）
+groupadd -g 5000 newgroup（创建新组newgroup，GID为5000）
+groupmod
+-n（更改组名）
+groupmod -n renamedgroup oldgroup（将组oldgroup重命名为renamedgroup）
+groupdel
+groupdel oldgroup（删除组oldgroup）
+passwd
+-e（强制用户下次登录更改密码）
+passwd -e newuser（强制新用户下次登录时更改密码）
+压缩与解压类命令
+命令
+常用选项
+案例
+tar
+-czvf（创建gzip压缩的tar文件）、-xzvf（解压gzip压缩的tar文件）
+tar -czvf archive.tar.gz dir/（将dir目录压缩为archive.tar.gz）
+gzip
+-d（解压）、-9（最大压缩比）
+gzip -9 file.txt（以最大压缩比压缩file.txt）
+gunzip
+gunzip file.txt.gz（解压gzip压缩的文件）
+bzip2
+-d（解压）、-9（最大压缩比）
+bzip2 -9 file.txt（以最大压缩比压缩file.txt）
+unzip
+-o（覆盖现有文件）
+unzip -o archive.zip（解压archive.zip并覆盖现有文件）
+权限管理类命令
+命令
+常用选项
+案例
+chmod
++x（添加执行权限）、-r（移除读权限）
+chmod 755 script.sh（设置脚本权限为rwxr-xr-x）
+chown
+--reference=FILE（参考文件的用户）
+chown --reference=file1 file2（将file2的所有者更改为与file1相同）
+chgrp
+--reference=FILE（参考文件的组）
+chgrp --reference=file1 file2（将file2的组更改为与file1相同）
+计划任务类命令
+命令
+常用选项
+案例
+crontab
+-e（编辑计划任务）、-l（列出计划任务）
+crontab -e（编辑当前用户的计划任务）
+数据库相关类命令
+命令
+常用选项
+案例
+mysql
+-u（用户名）、-p（密码）
+mysql -u root -p（以root用户登录MySQL数据库）
+mysqldump
+-u（用户名）、-p（密码）、--all-databases（备份所有数据库）
+mysqldump -u root -p --all-databases > backup.sql（备份所有数据库到backup.sql文件）
+其他命令
+命令
+常用选项
+案例
+echo
+-n（不换行输出）
+echo -n "text"（输出text不换行）
+export
+export VAR=value（设置环境变量VAR的值为value）
+source
+source ~/.bashrc（重新加载.bashrc配置文件）
+alias
+alias ll='ls -la'（创建别名ll为ls -la）
+unalias
+unalias ll（删除别名ll）
+history
+history（显示命令历史）
+!number
+!123（重新执行历史中的第123条命令）
+!!
+!!（重新执行上一条命令）
+ctrl + c
+ctrl + c（终止当前运行的命令）
+ctrl + z
+ctrl + z（暂停当前运行的命令）
+ctrl + d
+ctrl + d（退出当前shell会话）
+&
+command &（在后台运行命令）
+>
+command > output.txt（将命令输出重定向到output.txt文件）
+>>
+command >> output.txt（将命令输出追加到output.txt文件）

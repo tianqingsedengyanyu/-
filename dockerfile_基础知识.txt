@@ -1,0 +1,21 @@
+指令	说明
+FROM	指定基础镜像（scratch 代表空镜像）
+RUN	在容器内执行命令，可以写多条
+ADD	把文件拷贝到容器内，如果文件是 tar.xx 格式，会自动解压
+COPY	把文件拷贝到容器内，不会自动解压
+ENV	设置启动容器的环境变量
+WORKDIR	设置启动容器的默认工作目录（唯一）
+CMD	容器默认的启动参数（唯一）
+ENTRYPOINT	容器默认的启动命令（唯一）
+USER	启动容器使用的用户（唯一）
+EXPOSE	使用镜像创建的容器默认监听使用的端口号/协议
+Dockerfile 案例
+命令	说明
+FROM mylinux:latest	指定基础镜像
+RUN dnf install -y httpd php && dnf clean all	在容器内安装软件包并清理缓存
+COPY 00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf	将文件拷贝到容器内
+ADD myweb.tar.gz /var/www/html/	将文件拷贝到容器内并自动解压
+ENV LANG=C	设置环境变量
+EXPOSE 80/tcp	指定容器默认监听的端口
+WORKDIR /var/www/html	设置容器的默认工作目录
+CMD ["/usr/sbin/httpd", "-DFOREGROUND"]	设置容器默认的启动命令
