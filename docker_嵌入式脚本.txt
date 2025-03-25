@@ -1,0 +1,40 @@
+name: mysvc
+version: "3"
+services:
+  initsvc:
+    container_name: init
+    image: myos:8.5
+    command:
+      - sh
+      - -c
+      - |
+        for i in {1..9}
+        do
+            sleep 1
+            echo "${HOSTNAME} && $${HOSTNAME}"
+        done
+  svc1:
+    container_name: myphp
+    image: myos:php-fpm
+    healthcheck:                 # 定义健康检查
+      test:                      # 健康检查指令
+        - CMD-SHELL              # CMD 定义单一命令，CMD-SHELL 嵌入脚本
+        - sh
+        - -c
+        - |
+          ID=$${RANDOM}
+          sleep 5
+          exit $$((ID%2))
+      interval: 30s              # 健康检查的间隔时间
+      timeout: 10s               # 健康检查的超时时间
+      retries: 3                 # 健康检查的重试次数
+      start_period: 10s          # 容器启动后延时检查时间
+    depends_on:
+      initsvc:
+        condition: service_completed_successfully
+  svc2:
+    container_name: myweb
+    image: myos:httpd 
+    depends_on:
+      svc1:
+        condition: service_healthy

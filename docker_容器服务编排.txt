@@ -1,0 +1,26 @@
+name: myweb
+version: "3"
+services:
+  websvc:
+    container_name: nginx
+    image: myos:nginx
+    ports:
+      - 80:80
+    environment:
+      - "TZ=Asia/Shanghai"
+    volumes:
+      - type: bind
+        source: /root/conf/nginx.conf
+        target: /usr/local/nginx/conf/nginx.conf
+      - type: bind
+        source: /var/webroot
+        target: /usr/local/nginx/html
+  phpsvc:
+    container_name: php
+    image: myos:php-fpm
+    restart: always
+    network_mode: "service:websvc"
+    volumes:
+      - type: bind
+        source: /var/webroot
+        target: /usr/local/nginx/html
