@@ -1,0 +1,5 @@
+[root@pubserver ansible]# vim ~/.vimrc
+set ai et ts=2
+autocmd FileType yaml setlocal ai et ts=2
+set cursorline
+set cursorcolumn
