@@ -1,0 +1,3 @@
+source <(kubeadm completion bash|tee /etc/bash_completion.d/kubeadm)
+source <(kubectl completion bash|tee /etc/bash_completion.d/kubectl)
+如果不修改tab键k8s和集群中的子命令长度较长，需要修改tab键
