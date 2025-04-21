@@ -1,0 +1,6 @@
+#!/bin/bash
+LOAD_THRESHOLD=5
+load=$(uptime | awk -F'average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
+if (( $(echo "$load > $LOAD_THRESHOLD" | bc -l) )); then
+    echo "High system load: $load"
+fi

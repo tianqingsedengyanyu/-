@@ -1,0 +1,6 @@
+#!/bin/bash
+MEM_THRESHOLD=90
+mem_usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
+if (( $(echo "$mem_usage > $MEM_THRESHOLD" | bc -l) )); then
+    echo "Memory usage is high: $mem_usage%"
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+PROCESS="nginx"
+if ! pgrep -x "$PROCESS" >/dev/null; then
+    echo "$PROCESS is not running"
+    # 可以添加自动重启逻辑
+    # systemctl restart $PROCESS
+fi
