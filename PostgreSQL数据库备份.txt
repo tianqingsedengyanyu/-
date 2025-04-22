@@ -1,0 +1,5 @@
+#!/bin/bash
+BACKUP_DIR="/backup/postgres"
+DATE=$(date +%Y%m%d)
+sudo -u postgres pg_dumpall > $BACKUP_DIR/pg-all-$DATE.sql
+find $BACKUP_DIR -type f -mtime +7 -exec rm {} \;

@@ -1,0 +1,7 @@
+#!/bin/bash
+USER_LIST="user1 user2 user3"
+for user in $USER_LIST; do
+    useradd -m -s /bin/bash $user
+    echo "$user:password123" | chpasswd
+    echo "Created user $user"
+done

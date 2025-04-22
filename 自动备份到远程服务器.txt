@@ -1,0 +1,6 @@
+#!/bin/bash
+SOURCE_DIR="/important/data"
+REMOTE_USER="user"
+REMOTE_HOST="backup.server.com"
+REMOTE_DIR="/backups"
+tar -czf - $SOURCE_DIR | ssh $REMOTE_USER@$REMOTE_HOST "cat > $REMOTE_DIR/backup-$(date +%Y%m%d).tar.gz"

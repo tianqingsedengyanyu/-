@@ -1,0 +1,4 @@
+#!/bin/bash
+URL="https://example.com"
+STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" $URL)
+echo "HTTP status for $URL is $STATUS"

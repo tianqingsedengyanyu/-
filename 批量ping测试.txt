@@ -1,0 +1,9 @@
+#!/bin/bash
+HOSTS="google.com github.com example.com"
+for host in $HOSTS; do
+    if ping -c 1 $host &>/dev/null; then
+        echo "$host is up"
+    else
+        echo "$host is down"
+    fi
+done

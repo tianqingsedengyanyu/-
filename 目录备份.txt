@@ -1,0 +1,6 @@
+#!/bin/bash
+SOURCE_DIR="/var/www/html"
+BACKUP_DIR="/backup/web"
+DATE=$(date +%Y%m%d)
+tar -czf $BACKUP_DIR/web-backup-$DATE.tar.gz $SOURCE_DIR
+find $BACKUP_DIR -type f -mtime +30 -exec rm {} \;

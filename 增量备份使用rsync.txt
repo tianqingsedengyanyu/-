@@ -1,0 +1,5 @@
+#!/bin/bash
+SOURCE_DIR="/home/user"
+BACKUP_DIR="/backup/user"
+rsync -avz --delete $SOURCE_DIR $BACKUP_DIR/latest/
+rsync -avz --delete $SOURCE_DIR $BACKUP_DIR/backup-$(date +%Y%m%d)/

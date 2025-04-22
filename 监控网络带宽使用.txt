@@ -1,0 +1,10 @@
+#!/bin/bash
+INTERFACE="eth0"
+RX=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
+TX=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
+sleep 1
+RX_NEW=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
+TX_NEW=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
+RX_RATE=$(( ($RX_NEW - $RX) / 1024 ))
+TX_RATE=$(( ($TX_NEW - $TX) / 1024 ))
+echo "Download: $RX_RATE KB/s, Upload: $TX_RATE KB/s"
