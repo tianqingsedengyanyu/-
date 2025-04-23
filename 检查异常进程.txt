@@ -1,0 +1,2 @@
+#!/bin/bash
+ps aux | awk '$3 > 50 || $4 > 50 {print $0}'

@@ -1,0 +1,2 @@
+#!/bin/bash
+find / -xdev -type f -perm -o+w -exec ls -la {} \; 2>/dev/null
