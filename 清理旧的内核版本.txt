@@ -1,0 +1,2 @@
+#!/bin/bash
+dpkg --list | grep linux-image | awk '{print $2}' | grep -v $(uname -r) | xargs apt-get -y purge

@@ -1,0 +1,2 @@
+#!/bin/bash
+find /path/to/dir -type f -empty -delete

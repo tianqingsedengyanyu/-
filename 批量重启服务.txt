@@ -1,0 +1,6 @@
+#!/bin/bash
+SERVICES="nginx mysql php-fpm"
+for service in $SERVICES; do
+    systemctl restart $service
+    echo "Restarted $service"
+done

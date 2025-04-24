@@ -1,0 +1,5 @@
+#!/bin/bash
+DB_USER="postgres"
+DB_NAME="database"
+QUERY="SELECT * FROM users;"
+psql -U $DB_USER -d $DB_NAME -c "$QUERY"

@@ -1,0 +1,2 @@
+#!/bin/bash
+systemctl list-units --state=failed | awk '/failed/ {print $2}' | xargs -r systemctl restart

@@ -1,0 +1,4 @@
+#!/bin/bash
+SERVICE="nginx"
+PID=$(systemctl show -p MainPID $SERVICE | cut -d= -f2)
+top -p $PID -n 1 -b
