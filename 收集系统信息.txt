@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "=== System Information ==="
+echo "Hostname: $(hostname)"
+echo "Uptime: $(uptime)"
+echo "Kernel: $(uname -r)"
+echo "CPU: $(grep 'model name' /proc/cpuinfo | head -1 | cut -d: -f2 | sed 's/^ *//')"
+echo "Memory: $(free -h | grep Mem | awk '{print $2}')"
+echo "Disk: $(df -h / | tail -1 | awk '{print $2}')"

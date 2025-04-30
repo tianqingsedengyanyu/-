@@ -1,0 +1,4 @@
+#!/bin/bash
+BACKUP_DIR="/backup/mongodb"
+DATE=$(date +%Y%m%d)
+mongodump --out $BACKUP_DIR/mongodb-$DATE

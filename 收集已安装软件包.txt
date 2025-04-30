@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "=== Installed Packages ==="
+if [ -f /etc/redhat-release ]; then
+    rpm -qa
+elif [ -f /etc/debian_version ]; then
+    dpkg -l
+fi

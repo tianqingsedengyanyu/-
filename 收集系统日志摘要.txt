@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "=== System Logs Summary ==="
+journalctl --since "24 hours ago" -p err..alert

@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "=== Network Information ==="
+echo "IP Address: $(hostname -I)"
+echo "Public IP: $(curl -s ifconfig.me)"
+echo "Routing Table:"
+ip route
+echo "Open Ports:"
+ss -tulnp

@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "=== Hardware Information ==="
+echo "CPU:"
+lscpu
+echo "Memory:"
+dmidecode -t memory
+echo "Disks:"
+lsblk
