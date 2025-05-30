@@ -1,0 +1,11 @@
+#！/bin/bash
+#config nginx containerd
+####################
+#下载镜像
+docker pull nginx:latest
+#查看镜像
+docker images |  grep -aiE nginx
+#基于nginx镜像创建容器
+docker run -itd  -name=xxx    -p 80:80 nginx:latest
+#查看nginx容器运行状态
+docker ps | grep -aiE nginx

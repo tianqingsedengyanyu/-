@@ -1,0 +1,18 @@
+#！/bin/bash
+#backup mysql  database
+###########################
+MYSQL_DIR="/data/backup"
+MYSQL_CMD="/usr/bin/mysqldump"
+MYSQL_DB="$1"
+if [ ! -d /$MYSQL_DIR/ ] ;
+then mkdir -p /$MYSQL_DIR/
+if
+$MYSQL_CMD $MYSQL_DB > /$MYSQL_DIR/$MYSQL_DB.sql
+if [ $? -eq 0 ];
+then 	echo -e "-----------------"
+	echo -e "$MYSQL_DB数据库备份成功，请查看"
+	ls -l /$MYSQL_DIR/$MYSQL_DB.sql
+else
+	echo -e "-----------------"
+	echo -e "$MYSQL_DB数据库备份失败"
+fi

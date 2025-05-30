@@ -1,0 +1,26 @@
+## Unix的脚本
+#!/bin/bash
+#install docker
+######################
+#docker官网下载软件包
+wget -c https://download.docker.com/linux/static/stable/x86_64/docker-28.2.1.tgz
+#查看docker软件包是否下载成功
+ls -l docker-28.2.1.tgz
+#通过tar工具解压
+tar -xzvf docker-28.2.1.tgz
+#解压docker拷贝到/usr/local/:
+\cp -a docker /usr/local/
+#查看docker程序是否部署成功
+ls -l /usr/local/docker/
+#将docker部署目录加入到$PATH环境变量
+cat >> /etc/profile<<EOF
+export PATH=\$PATH:/usr/local/docker/EOF
+#PATH重新生效
+source /etc/profile
+#启动docker服务进程
+nohup /usr/local/docker/dockerd -H 0.0.0.0:2375 -H unix:/
+//var/run/docker.sock &
+#查看docker进程状态
+ps -ef | grep -aiE docker
+#查看docker版本信息
+docker --version

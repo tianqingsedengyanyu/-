@@ -1,0 +1,20 @@
+#!/bin/bash
+#install mysql
+################
+#安装数据库服务
+yum -y install mysql-server mysql
+#查看mysql是否部署成功
+rpm -qa  | grep -aiE mysql
+#启动数据库服务
+systemctl start mysqld.server
+sleep 3
+#查看mysql进程状态
+ps -ef | grep -aiE mysqld
+#查看mysql监听端口
+netstat -antulp | grep -aiwE 3306
+#查看数据库版本信息
+mysql --version
+#创建数据库
+mysql -e "create database xxx;"
+#查看数据库中是否存在xxx库
+mysql -e "show databases"  | grep -aiE  xxx
