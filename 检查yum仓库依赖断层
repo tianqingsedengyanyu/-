@@ -1,0 +1,116 @@
+#!/bin/bash
+
+# 设置你的YUM源RPM包所在目录
+REPO_DIR="/var/www/html/kylin/packages"
+
+cd "$REPO_DIR" || exit 1
+
+echo "正在扫描重复的软件包..."
+
+# 1. 获取所有rpm包，提取包名，找出出现次数大于1的包名
+rpm -qp --qf "%{NAME}\n" *.rpm 2>/dev/null | sort | uniq -d | while read -r pkg_name; do
+    echo "----------------------------------------"
+    echo "发现重复软件包: $pkg_name"
+    
+    # 2. 列出该包名的所有文件及其完整EVR（Epoch-Version-Release）和架构
+    # 格式：文件名 | 完整版本 | 架构
+    rpm -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}.rpm|%{VERSION}|%{RELEASE}|%{ARCH}\n" "$pkg_name"-[0-9]* 2>/dev/null | sort -t'|' -k2,2V -k3,3V | while IFS='|' read -r filename ver rel arch; do
+        echo "  $filename"
+    done
+done
+
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+REPO_DIR="/var/www/html/kylin/packages"
+cd "$REPO_DIR" || exit 1
+
+# 利用 rpmdev-sort 或 Python 脚本较复杂，这里提供一个利用 rpm 自带比较的稳妥方案：
+# 遍历所有包名
+rpm -qp --qf "%{NAME}\n" *.rpm 2>/dev/null | sort -u | while read -r name; do
+    # 找出当前name的所有rpm文件，按rpm版本排序，排在最后的版本最高
+    files=$(rpm -qp --qf "%{VERSION}-%{RELEASE}.%{ARCH} %{N}-%{V}-%{R}.%{ARCH}.rpm\n" "$name"-[0-9]* 2>/dev/null | sort -V | awk '{print $2}')
+    
+    # 计算总共有几个版本
+    count=$(echo "$files" | wc -w)
+    
+    if [ "$count" -gt 1 ]; then
+        echo "处理包: $name (共 $count 个版本)"
+        # 除了最后一个（最新版），其余全部列为待删除对象
+        latest=$(echo "$files" | awk '{print $NF}')
+        echo "  -> 保留最新版: $latest"
+        
+        for f in $files; do
+            if [ "$f" != "$latest" ]; then
+                echo "  -> 删除旧版本: $f"
+                rm -f "$f"
+            fi
+        done
+    fi
+done
+
+echo "清理完成，正在重建 YUM 索引..."
+createrepo --update "$REPO_DIR"
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+
+# 1. 在数组中定义需要扫描的 8 个目录路径
+REPO_DIRS=(
+    "/var/www/html/kylin/packages/dir1"
+    "/var/www/html/kylin/packages/dir2"
+    "/var/www/html/kylin/packages/dir3"
+    "/var/www/html/kylin/packages/dir4"
+    "/var/www/html/kylin/packages/dir5"
+    "/var/www/html/kylin/packages/dir6"
+    "/var/www/html/kylin/packages/dir7"
+    "/var/www/html/kylin/packages/dir8"
+)
+
+# 2. 定义扫描单个目录的函数
+scan_repo() {
+    local target_dir="$1"
+    echo "========================================"
+    echo "正在扫描目录: $target_dir"
+    echo "========================================"
+
+    if [ ! -d "$target_dir" ]; then
+        echo "警告: 目录 $target_dir 不存在，跳过。"
+        return
+    fi
+
+    cd "$target_dir" || return
+
+    # 获取所有rpm包，提取包名，找出出现次数大于1的包名
+    rpm -qp --qf "%{NAME}\n" *.rpm 2>/dev/null | sort | uniq -d | while read -r pkg_name; do
+        echo "----------------------------------------"
+        echo "发现重复软件包: $pkg_name"
+        
+        # 列出该包名的所有文件及其完整版本
+        rpm -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}.rpm|%{VERSION}|%{RELEASE}|%{ARCH}\n" "$pkg_name"-[0-9]* 2>/dev/null | sort -t'|' -k2,2V -k3,3V | while IFS='|' read -r filename ver rel arch; do
+            echo "  $filename"
+        done
+    done
+    echo ""
+}
+
+# 3. 循环调用函数遍历所有目录
+for dir in "${REPO_DIRS[@]}"; do
+    scan_repo "$dir"
+done
+
+
